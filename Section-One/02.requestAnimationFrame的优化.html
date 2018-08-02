@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>requestAnimationFrame的优化</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+        #SomeElementYouWantToAnimate {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    
+    <canvas id="canvas" width="600" height="300">
+        Canvas not supported
+    </canvas>
+
+    <br />
+    <canvas id="SomeElementYouWantToAnimate" width="600" height="300">
+        Canvas not supported
+    </canvas>
+
+
+    <script>
+        var canvas   = document.getElementById("canvas"),
+            context  = canvas.getContext('2d');
+
+        context.font        = '38pt Arial';
+        context.fillStyle   = 'pink';
+        context.strokeStyle = 'black';
+        context.fillText('Hello Canvas',canvas.width/2 - 150,canvas.height/2 + 15);
+        context.strokeText('Hello Canvas',canvas.width/2 - 150,canvas.height/2 + 15);
+
+
+        var start = null;
+        var element = document.getElementById('SomeElementYouWantToAnimate');
+        element.style.position = 'absolute';
+
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            var progress = timestamp - start;
+            element.style.left = Math.min(progress / 10, 200) + 'px';
+            if (progress < 2000) {
+                window.requestAnimationFrame(step);
+            }
+        }
+
+        window.requestAnimationFrame(step);
+    </script>
+
+</body>
+</html>

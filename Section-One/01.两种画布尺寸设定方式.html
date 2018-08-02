@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A Simple Canvas Example</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+        #canvas2 {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 元素中设置尺寸 -->
+    <p>canvas element size: 600x300</p>
+    <p>canvas drawing surface size: 600x300</p>
+    <canvas id="canvas" width="600" height="300">
+        Canvas not supported
+    </canvas>
+
+    <!-- CSS中设置尺寸，画布被拉伸 -->
+    <p>canvas element size: 600x300</p>
+    <p>canvas drawing surface size: 300x150(default)</p>
+    <canvas id="canvas2">
+        Canvas not supported
+    </canvas>
+
+
+    <script>
+        var canvas   = document.getElementById("canvas"),
+            canvas2  = document.getElementById("canvas2"),
+            context  = canvas.getContext('2d'),
+            context2 = canvas2.getContext('2d');
+
+        context.font        = '38pt Arial';
+        context.fillStyle   = 'pink';
+        context.strokeStyle = 'black';
+        context.fillText('Hello Canvas',canvas.width/2 - 150,canvas.height/2 + 15);
+        context.strokeText('Hello Canvas',canvas.width/2 - 150,canvas.height/2 + 15);
+        
+        context2.font        = '38pt Arial';
+        context2.fillStyle   = 'pink';
+        context2.strokeStyle = 'black';
+        context2.fillText('Hello Canvas',canvas2.width/2 - 150,canvas2.height/2 + 15);
+        context2.strokeText('Hello Canvas',canvas2.width/2 - 150,canvas2.height/2 + 15);
+
+    </script>
+
+</body>
+</html>
