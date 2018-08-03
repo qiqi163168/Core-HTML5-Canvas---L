@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Analog Clock</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+    <canvas id="canvas" width="1024" height="768"
+            style="border: 1px solid #aaa; display: block; margin: 50px auto;">
+        Canvas not supported
+    </canvas>
+
+    <script>
+        window.onload = function(){
+            var canvas  = document.getElementById("canvas");
+
+            // 根据context是否为真，判断浏览器是否支持canvas
+            if (canvas.getContext('2d')) {
+                var context = canvas.getContext('2d');
+                // 使用context进行绘图
+            }
+            else {
+                alert('当前浏览器不支持Canvas，请更换浏览器后再试') 
+            }
+    
+        }
+       
+    
+    </script>
+
+</body>
+</html>
