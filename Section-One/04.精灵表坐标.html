@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>精灵表坐标查看器</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            background: #fff;
+            position: absolute;
+            left: 0px;
+            top: 20px;
+            margin: 20px;
+            border: thin inset rgba(100,150,230,0.5);
+            cursor: pointer;
+        }
+        #readout{
+            height: 50px;
+            width: 100px;
+            margin-top: 10px;
+            margin-left: 15px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="readout">坐标</div>
+    <br />
+
+    <canvas id="canvas" width="500" height="250">
+        Canvas not supported
+    </canvas>
+
+    <script>
+        var canvas      = document.getElementById("canvas"),
+            readout     = document.getElementById("readout"),
+            context     = canvas.getContext('2d'),
+            spritesheet = new Image();
+
+        // FUNCTIONS
+        function windowToCanvas(canvas,x,y){
+            var bbox = canvas.getBoundingClientRect();
+            return {
+                x : x - bbox.left * (canvas.width/bbox.width),
+                y : y - bbox.top * (canvas.height/bbox.height)
+            };
+        };
+
+        function drawBackground(){
+            var VERTICAL_LINE_SPACING = 12,
+                i = context.canvas.height;
+            
+            context.clearRect(0,0,canvas.width,canvas.height);
+            context.strokeStyle = 'lightgray';
+            context.lineWidth = 1;
+
+            while( i > VERTICAL_LINE_SPACING*4){
+                context.beginPath();
+                context.moveTo(0,i);
+                context.lineTo(context.canvas.width,i);
+                context.stroke();
+                i -= VERTICAL_LINE_SPACING;
+            }
+        };
+        function drawSpritesheet(){
+            context.drawImage(spritesheet,0,0);
+        };
+        function drawGuidelines(x,y){
+            context.strokeStyle = 'rgba(0,0,230,0.8)';
+            context.lineWidth = 0.5;
+            drawVerticalLine(x);
+            drawHorizontalLine(y);
+        };
+        function updateReadout(x,y){
+            readout.innerText = '(' + x.toFixed(0) + ', ' + y.toFixed(0) + ')';
+        };
+        function drawHorizontalLine(y){
+            context.beginPath();
+            context.moveTo(0,y+0.5);
+            context.lineTo(context.canvas.width,y+0.5);
+            context.stroke();
+        };
+        function drawVerticalLine(x){
+            context.beginPath();
+            context.moveTo(x+0.5, 0);
+            context.lineTo(x+0.5,context.canvas.height);
+            context.stroke();
+        };
+        
+        // Event handlers
+        canvas.onmousemove = function(e){
+            // 每次都会重新刷入图，因为drawbackgound里面会把绘板清空
+            var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+            drawBackground();
+            drawSpritesheet();
+            drawGuidelines(loc.x, loc.y);
+            updateReadout(loc.x, loc.y);
+        }
+        // Initialization
+        spritesheet.src = 'running-sprite-sheet.png';
+        spritesheet.onload = function(e){
+            //先把精灵图显示出来
+            drawSpritesheet();
+        };
+        //先把基准线显示出来
+        drawBackground();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>通过保存与恢复绘图表面来绘制辅助线</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            background: #fff;
+            position: absolute;
+            left: 0px;
+            top: 20px;
+            margin: 20px;
+            border: thin inset rgba(100,150,230,0.5);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="250">
+        Canvas not supported
+    </canvas>
+
+    <script>
+        var canvas  = document.getElementById("canvas"),
+            context = canvas.getContext('2d');
+
+        function windowToCanvas(canvas,x,y){
+            var bbox = canvas.getBoundingClientRect();
+            return {
+                x : x - bbox.left * (canvas.width/bbox.width),
+                y : y - bbox.top * (canvas.height/bbox.height)
+            };
+        };
+        
+        function drawGuidelines(x,y){
+            context.strokeStyle = 'rgba(0,0,230,0.8)';
+            context.lineWidth = 0.5;
+            drawVerticalLine(x);
+            drawHorizontalLine(y);
+        };
+
+        function drawHorizontalLine(y){
+            context.beginPath();
+            context.moveTo(0,y+0.5);
+            context.lineTo(context.canvas.width,y+0.5);
+            context.stroke();
+        };
+
+        function drawVerticalLine(x){
+            context.beginPath();
+            context.moveTo(x+0.5, 0);
+            context.lineTo(x+0.5,context.canvas.height);
+            context.stroke();
+        };
+        // Save and restore drawing surface
+        function saveDrawingSurface(){
+            drawingSurfaceImageData = context.getImageData(0,0,canvas.width,canvas.height);
+        }
+
+        function restoreDrawingSurface(){
+            context.putImageData(drawingSurfaceImageData,0,0);
+        }
+
+        canvas.onmousedown = function(e){
+            // code goes here...
+            saveDrawingSurface();
+            // code goes here...
+        };
+
+        canvas.onmousemove = function(e){
+            var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+
+            if(dragging){
+                restoreDrawingSurface();
+                // code goes here...
+                if(guidewires){
+                    drawGuidewires(mousedown.x,mousedown.y);
+                }
+            }
+        };
+
+        canvas.onmouseup = function(e){
+            // code goes here...
+            restoreDrawingSurface();
+        };
+    </script>
+
+</body>
+</html>
