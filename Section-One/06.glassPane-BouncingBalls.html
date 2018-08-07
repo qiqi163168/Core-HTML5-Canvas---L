@@ -59,7 +59,7 @@
         <p>One hundred balls bouncing</p>
         <a id="startButton">Start</a>
     </div>
-    <canvas id="canvas" width="750" height="500">
+    <canvas id="canvas" width="800" height="500">
         Canvas not supported
     </canvas>
 
@@ -70,8 +70,8 @@
             glasspane   = document.getElementById('glasspane'),
             paused      = true,
             circles     = [];
-
-        drawGrid(context, 'lightgray', 10, 10);
+        // 基准线
+        drawGrid(context, 'lightgrey', 10, 10);
 
         context.lineWidth = 0.5;
         context.font = '32pt Ariel';
@@ -79,14 +79,14 @@
         //创建100个球
         for (var i=0; i < 100; ++i) {
             circles[i] = { 
-                x: 300, 
-                y: 300, 
+                x: 400, // 球球起始位置 
+                y: 250, // 球球起始位置
                 velocityX: 3*Math.random(),     //x速度
                 velocityY: 3*Math.random(),     //y速度
                 radius: 50*Math.random(),       //半径
                 color: 'rgba(' + (Math.random()*255).toFixed(0) + ', ' +
                                 (Math.random()*255).toFixed(0) + ', ' +
-                                (Math.random()*255).toFixed(0) + ', 1.0)' 
+                                (Math.random()*255).toFixed(0) + ', 0.5)' 
             };
         }
 
@@ -120,15 +120,15 @@
                     adjustPosition(circle);
                 });
             }
-        }, 1000 / 60);
+        }, 1000/60);
 
         function adjustPosition(circle) {
-            //边缘检测
+            // x轴边缘检测 - 遇边反向
             if (circle.x + circle.velocityX + circle.radius > context.canvas.width ||
             circle.x + circle.velocityX - circle.radius < 0) 
                 circle.velocityX = -circle.velocityX;
 
-            //边缘检测
+            // y轴边缘检测 - 遇边反向
             if (circle.y + circle.velocityY + circle.radius > context.canvas.height ||
             circle.y + circle.velocityY - circle.radius  < 0) 
                 circle.velocityY= -circle.velocityY;
@@ -136,7 +136,7 @@
             circle.x += circle.velocityX;
             circle.y += circle.velocityY;
         }
-
+        // 绘制canvas基准线
         function drawGrid(context, color, stepx, stepy) {
             context.strokeStyle = color;
             context.lineWidth = 0.5;
