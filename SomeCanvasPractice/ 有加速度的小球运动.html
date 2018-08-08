@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>有加速度的小球运动</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+    <canvas id="canvas" width="800" height="600"
+            style="border: 1px solid #aaa; display: block; margin: 50px auto;">
+        Canvas not supported
+    </canvas>
+
+    <script>
+        var ball = {
+            x    : 400, //起始x轴距离
+            y    : 200, //起始y轴距离
+            r    : 20,   //球半径
+            a    : 2,   //加速度
+            vx   : -4,  //x轴速度，可试试 <0 =0 >0的三种值 
+            vy   : -10,   //y轴速度，可试试 <0 =0 >0的三种值 
+            color:'pink' //球色
+        };
+        window.onload = function(){
+            var canvas  = document.getElementById("canvas"),
+                context = canvas.getContext("2d");
+            
+            setInterval(function(){
+                render(context);
+                update();
+            },50);  
+        };
+
+        function update(){
+            ball.x  += ball.vx;
+            ball.y  += ball.vy;
+            ball.vy += ball.a;
+
+            // 碰撞检测
+            if( ball.y >= canvas.height - ball.r){
+                // 控制触底距离
+                ball.y = canvas.height - ball.r;
+                // 碰撞损耗
+                ball.vy = -(ball.vy)*0.5;
+                // 碰撞无损耗
+                // ball.vy = -(ball.vy);
+            }
+        };
+
+        function render(ctx){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = ball.color;
+            ctx.beginPath();
+            ctx.arc(ball.x,ball.y,ball.r,0,2*Math.PI);
+            ctx.closePath();
+            ctx.fill();
+        }
+    </script>
+
+</body>
+</html>

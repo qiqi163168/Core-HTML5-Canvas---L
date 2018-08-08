@@ -21,23 +21,8 @@
         Canvas not supported
     </canvas>
 
-    <script>
-        window.onload = function(){
-            var canvas  = document.getElementById("canvas");
-
-            // 根据context是否为真，判断浏览器是否支持canvas
-            if (canvas.getContext('2d')) {
-                var context = canvas.getContext('2d');
-                // 使用context进行绘图
-            }
-            else {
-                alert('当前浏览器不支持Canvas，请更换浏览器后再试') 
-            }
-    
-        }
-       
-    
-    </script>
+    <script src="digit.js"></script>
+    <script src="countdown.js"></script>
 
 </body>
 </html>

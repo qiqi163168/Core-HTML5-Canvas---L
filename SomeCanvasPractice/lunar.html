@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Seven Piece Puzzle</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+    <canvas id="canvas" width="1024" height="800"
+            style="border: 1px solid #aaa; display: block; margin: 50px auto;">
+        Canvas not supported
+    </canvas>
+
+    <script>
+        window.onload = function(){
+            var canvas  = document.getElementById("canvas"),
+                context = canvas.getContext("2d");
+            
+            context.lineWidth = 5;
+            context.strokeStyle = '#005588';
+            context.fillStyle = '#005588';
+            for(var i=0 ; i<10 ;i++){
+                context.beginPath();
+                // context.arc(50+i*100, 60, 40, 0, 2*Math.PI*(i+1)/10);
+                context.arc(50+i*100, 60, 40, 0, 2*Math.PI*(i+1)/10,true);
+                // context.lineTo(50+i*100, 60);
+                context.closePath();
+                // context.stroke();
+                context.fill();
+            }
+        }
+    
+    </script>
+
+</body>
+</html>
