@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>矩形的绘制</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+    </style>
+</head>
+<body>
+    <!-- 元素中设置尺寸 -->
+    <p1>颜色与透明度</p1>
+    <p>笔触：context.strokeStyle=color|gradient|pattern;</p>
+    <p>填充：context.fillStyle=color|gradient|pattern;</p>
+    <p>color：十六进制色、RGB、RGBA、HSL、HSLA、预定义</p>
+
+    <canvas id="canvas" width="600" height="400">
+        Canvas not supported
+    </canvas>
+    
+    <script>
+        var canvas   = document.getElementById("canvas"),
+            context  = canvas.getContext('2d');
+        
+        context.lineJoin = 'round';
+        context.lineWidth = 40;
+
+        context.font = '24px Helvetica';
+        context.fillText('Click anywhere to erase', 175, 200);
+        
+        context.strokeStyle = 'goldenrod';
+        context.fillStyle = 'rgba(0, 0, 255, 0.5)';
+
+        context.strokeRect(75, 100, 200, 200);
+        context.fillRect(325, 100, 200, 200);
+
+        context.canvas.onmousedown = function (e) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        };
+        
+
+    </script>
+
+</body>
+</html>

@@ -6,18 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Countdown Clock</title>
     <style>
+        html{
+            height: 100%;
+            overflow: hidden;
+        }
         body {
+
             background: #ddd;
+            height : 100%;
         }
         #canvas {
+            position: absolute;
+            left: 0px;
+            top: 0px;
             background: #fff;
         }
     </style>
 </head>
 <body>
-    
-    <canvas id="canvas" width="1024" height="768"
-            style="border: 1px solid #aaa; display: block; margin: 50px auto;">
+    <!-- 非屏幕自适应 -->
+    <!-- <canvas id="canvas" style="border: 1px solid #aaa; display: block; margin: 50px auto;">
+        Canvas not supported
+    </canvas> -->
+
+    <!-- 屏幕自适应 -->
+    <canvas id="canvas" style="height:100%">
         Canvas not supported
     </canvas>
 

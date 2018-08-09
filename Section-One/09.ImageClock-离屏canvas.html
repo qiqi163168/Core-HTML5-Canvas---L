@@ -4,34 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>toDataURL()方法来打印Canvas内容</title>
+    <title>ImageClock - 离屏Canvas</title>
     <style>
         body {
             background: #ddd;
         }
         #canvas {
             position: absolute;
-            left: 10px;
-            top: 1.5em;
+            left: 410px;
             margin: 20px;
-            border: thin solid #aaa;
-            background: #fff;
+            display: inline;
+            background: pink;
         }
         #snapshotImageElement {
-            position: absolute;  
+            position: absolute;
             left: 10px;
-            top: 1.5em;
             margin: 20px;
-            border: thin solid #aaa;
-            background: #fff;  
+            border: thin solid #aaa; 
         }
     </style>
     </head>
     <body>
-        <div id="controls">
-            <input id="snapshotButton" type="button" value="Take snapshot"/>
-        </div>
-
         <img id="snapshotImageElement"/>
 
         <canvas id="canvas" width="400" height="400">
@@ -39,6 +32,8 @@
         </canvas>
     
         <script>
+            var offscreen            = document.createElement('canvas');
+            
             var snapshotButton       = document.getElementById("snapshotButton"),
                 snapshotImageElement = document.getElementById("snapshotImageElement"),
                 loop;
@@ -53,6 +48,26 @@
                 RADIUS               = canvas.width/2 - MARGIN,
                 HAND_RADIUS          = RADIUS + NUMERAL_SPACING;
             
+            // ImageClock Functions
+            function updateClockImage(){
+                snapshotImageElement.src = canvas.toDataURL();
+            };
+
+            function drawClock(){
+                context.clearRect(0,0,canvas.width,canvas.height);
+                context.save();
+                context.fillStyle = 'rgba(255,255,255,0.8)';
+                context.fillRect(0,0,canvas.width,canvas.height);
+
+                drawCircle();
+                drawCenter();
+                drawHands();
+                
+                context.restore();
+                drawNumerals();
+                updateClockImage();
+            };
+
             // Functions
             function drawCircle(){
                 // 起始一条路径or重置当前路径
@@ -101,34 +116,7 @@
                 drawHand(date.getSeconds() , false , 0.2);
             };
     
-            function drawClock(){
-                context.clearRect(0,0,canvas.width,canvas.height);
-                drawCircle();
-                drawNumerals();
-                drawCenter();
-                drawHands();
-            };
-
-            // Event handlers...
-            snapshotButton.onclick = function(e){
-                var dataUrl;
-
-                if(snapshotButton.value === 'Take snapshot'){
-                    dataUrl = canvas.toDataURL();
-                    clearInterval(loop);
-                    snapshotImageElement.src = dataUrl;
-                    snapshotImageElement.style.display = 'inline';
-                    canvas.style.display = 'none';
-                    snapshotButton.value = 'Return to Canvas';
-                }
-                else{
-                    canvas.style.display = 'inline';
-                    snapshotImageElement.style.display = 'none';
-                    loop = setInterval(drawClock,1000);
-                    snapshotButton.value = 'Take snapshot'
-                };
-            };
-    
+            
             // Initialization...
             context.font = FONT_HEIGHT + 'px Arial';
             loop         = setInterval(drawClock,1000);

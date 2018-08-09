@@ -6,13 +6,23 @@ var WINDOW_WIDTH      = 1024,
     MARGIN_LEFT       = 30,
     curShowTimeSecond = 0;
 
-const endTime = new Date(2018,7,9,0,30,22);
+// 设置定点的倒计时，月份从0-11代表1-12
+// const endTime = new Date(2018,7,9,17,30,00);
+
+// 倒计1小时
+// var endTime = new Date();
+// endTime.setTime(endTime.getTime() + 3600*1000);
 
 var balls = [];
 
-
-
 window.onload = function(){
+    // 屏幕自适应
+    WINDOW_WIDTH  = document.body.clientWidth;
+    WINDOW_HEIGHT = document.body.clientHeight;
+    MARGIN_LEFT   = Math.round(WINDOW_WIDTH/10); // 左右边距是屏幕的1/10
+    MARGIN_TOP    = Math.round(WINDOW_HEIGHT/5);
+    RADIUS        = Math.round(WINDOW_WIDTH*4/5/108)-1;
+    
     var canvas  = document.getElementById('canvas'),
         context = canvas.getContext('2d');
     
@@ -86,7 +96,6 @@ function update(){
     }
 
     updateBalls();
-    console.log(balls.length);
 };
 
 function updateBalls(){
@@ -131,7 +140,7 @@ function addBalls(x,y,num){
                     vy : -5,     //-6 ~ -4 
                     color : 'rgba(' + (Math.random()*255).toFixed(0) + ', ' +
                                     (Math.random()*255).toFixed(0) + ', ' +
-                                    (Math.random()*255).toFixed(0) + ', 1)' 
+                                    (Math.random()*255).toFixed(0) + ', 0.5)' 
                 }
                 balls.push(aBall);
             }
@@ -139,14 +148,23 @@ function addBalls(x,y,num){
     }
 };
 
+// 倒计时器
+// function getCurrentShowTimeSeconds(){
+//     // 当前时间
+//     var curTime = new Date();
+//     // 时间差
+//     var ret = endTime.getTime() - curTime.getTime();
+//     // 将毫秒变为秒
+//     ret = Math.round(ret/1000);
+//     return ret >= 0 ? ret : 0;
+// }; 
+
+// 时钟
 function getCurrentShowTimeSeconds(){
     // 当前时间
     var curTime = new Date();
-    // 时间差
-    var ret = endTime.getTime() - curTime.getTime();
-    // 将毫秒变为秒
-    ret = Math.round(ret/1000);
-    return ret >= 0 ? ret : 0;
+    var res = curTime.getHours()*3600 + curTime.getMinutes()*60 + curTime.getSeconds();
+    return res;
 }; 
 
 function render(ctx){
@@ -175,7 +193,7 @@ function render(ctx){
 };
 
 function renderDigit(x,y,num,ctx){
-    ctx.fillStyle = 'rgba(0,102,153,0.5)';
+    ctx.fillStyle = 'rgba(0,102,153,1)';
     
     for(var i=0; i<digit[num].length; i++){
         for(var j=0; j<digit[num][i].length; j++){
