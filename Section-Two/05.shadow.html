@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shadow</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+    </style>
+</head>
+<body>
+    <!-- 元素中设置尺寸 -->
+    <p1>阴影</p1>
+    <p>color：context.shadowColor=color;</p>
+    <p>模糊级数：context.shadowBlur=number;</p>
+    <p>x轴偏移：context.shadowOffsetX=number;</p>
+    <p>y轴偏移：context.shadowOffsetY=number;</p>
+
+    <canvas id="canvas" width="600" height="400">
+        Canvas not supported
+    </canvas>
+    
+    <script>
+        var canvas       = document.getElementById("canvas"),
+            context      = canvas.getContext('2d'),
+            SHADOW_COLOR = 'rgba(0,0,0,0.7)';
+        
+        
+        context.beginPath();
+        context.lineWidth = 20;
+        context.shadowColor = SHADOW_COLOR;
+        context.shadowOffsetX = 1;
+        context.shadowOffsetY = 1;
+        context.shadowBlur = 20;
+        context.closePath();
+        context.strokeStyle = 'goldenrod';
+        context.strokeRect(75, 100, 200, 200);
+        
+        context.beginPath();
+        context.shadowColor = SHADOW_COLOR;
+        context.shadowOffsetX = 4;
+        context.shadowOffsetY = 4;
+        context.shadowBlur = 50;
+        context.closePath();
+        context.fillStyle = 'rgba(0, 0, 255, 0.5)';
+        context.fillRect(325, 100, 200, 200);
+
+        
+
+    </script>
+
+</body>
+</html>

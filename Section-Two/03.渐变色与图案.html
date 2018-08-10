@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>渐变色</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas,#canvas2{
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- 元素中设置尺寸 -->
+    <p1>渐变色</p1>
+    <p>gradient = context.createLinearGradient(x0,y0,x1,y1);</p>
+    <p>gradient = context.createRadialGradient(x0,y0,r0,x1,y1,r1);</p>
+    <p>gradient.addColorStop(stop,color);</p>
+
+    <canvas id="canvas" width="600" height="400">
+        Canvas not supported
+    </canvas>
+
+    <canvas id="canvas2" width="600" height="400">
+        Canvas not supported
+    </canvas>
+    
+    <script>
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            // gradient = context.createLinearGradient(0, 0, 0, canvas.height/2);
+            // gradient = context.createLinearGradient(0, 0, 0, canvas.height);
+            gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+
+        gradient.addColorStop(0, 'blue');
+        gradient.addColorStop(0.25, 'white');
+        gradient.addColorStop(0.5, 'purple');
+        gradient.addColorStop(0.75, 'red');
+        gradient.addColorStop(1, 'yellow');
+
+        context.fillStyle = gradient;
+        context.rect(0, 0, canvas.width, canvas.height);
+        context.fill();
+        
+        var canvas2   = document.getElementById('canvas2'),
+            context2  = canvas2.getContext('2d'),
+            gradient2 = context2.createRadialGradient(300, 50, 50, 300, 300, 100);
+
+        gradient2.addColorStop(0, 'blue');
+        gradient2.addColorStop(0.25, 'white');
+        gradient2.addColorStop(0.5, 'purple');
+        gradient2.addColorStop(0.75, 'red');
+        gradient2.addColorStop(1, 'yellow');
+
+        context2.fillStyle = gradient2;
+        context2.rect(0, 0, canvas.width, canvas.height);
+        context2.fill();
+    </script>
+
+</body>
+</html>
