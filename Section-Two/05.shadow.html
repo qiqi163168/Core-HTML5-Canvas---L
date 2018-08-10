@@ -28,30 +28,29 @@
     <canvas id="canvas" width="600" height="400">
         Canvas not supported
     </canvas>
-    
+
     <script>
         var canvas       = document.getElementById("canvas"),
             context      = canvas.getContext('2d'),
-            SHADOW_COLOR = 'rgba(0,0,0,0.7)';
+            SHADOW_COLOR = 'rgba(0,0,0,1)';
         
         
         context.beginPath();
         context.lineWidth = 20;
-        context.shadowColor = SHADOW_COLOR;
-        context.shadowOffsetX = 1;
-        context.shadowOffsetY = 1;
-        context.shadowBlur = 20;
-        context.closePath();
         context.strokeStyle = 'goldenrod';
+        context.shadowColor = SHADOW_COLOR;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.shadowBlur = 40;
         context.strokeRect(75, 100, 200, 200);
+        
         
         context.beginPath();
         context.shadowColor = SHADOW_COLOR;
-        context.shadowOffsetX = 4;
-        context.shadowOffsetY = 4;
+        context.shadowOffsetX = -10;
+        context.shadowOffsetY = -10;
         context.shadowBlur = 50;
-        context.closePath();
-        context.fillStyle = 'rgba(0, 0, 255, 0.5)';
+        context.fillStyle = 'rgba(0, 0, 255, 1)';
         context.fillRect(325, 100, 200, 200);
 
         

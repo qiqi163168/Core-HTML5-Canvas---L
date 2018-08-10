@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>insetShadow</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            background: #fff;
+            left: 0px;
+            top: 20px;
+            margin: 20px;
+            border: thin inset rgba(100,150,230,0.5);
+            cursor: pointer;
+        }
+        #readout{
+            height: 50px;
+            width: 100px;
+            margin-top: 10px;
+            margin-left: 15px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- 元素中设置尺寸 -->
+    <p1>内阴影</p1>
+    <p>剪切：context.clip();</p>
+    <p>color：context.shadowColor=color;</p>
+    <p>模糊级数：context.shadowBlur=number;</p>
+    <p>x轴偏移：context.shadowOffsetX=number;</p>
+    <p>y轴偏移：context.shadowOffsetY=number;</p>
+    <br />
+    <div id="readout">坐标</div>
+    <canvas id="canvas" width="600" height="400">
+        Canvas not supported
+    </canvas>
+
+    <script>
+        var canvas       = document.getElementById("canvas"),
+            context      = canvas.getContext('2d'),
+            readout      = document.getElementById("readout"),
+            SHADOW_COLOR = 'rgba(0,0,0,1)';
+        
+        
+        context.beginPath();
+        context.lineWidth = 20;
+        context.rect(140, 90, 320, 220);
+        context.stroke();
+        context.clip();
+        
+        context.strokeStyle = 'goldenrod';
+        context.shadowColor = SHADOW_COLOR;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.shadowBlur = 40;
+        context.strokeRect(150, 100, 300, 200);
+        
+        function windowToCanvas(canvas,x,y){
+            var bbox = canvas.getBoundingClientRect();
+            return {
+                x : x - bbox.left * (canvas.width/bbox.width),
+                y : y - bbox.top * (canvas.height/bbox.height)
+            };
+        };
+        
+        function updateReadout(x,y){
+            readout.innerText = '(' + x.toFixed(0) + ', ' + y.toFixed(0) + ')';
+        };
+
+        canvas.onmousemove = function(e){
+            var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+            updateReadout(loc.x, loc.y);
+        }
+
+        
+
+    </script>
+
+</body>
+</html>
