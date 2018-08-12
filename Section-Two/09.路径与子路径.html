@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>路径与子路径</title>
+   <style> 
+      body {
+         background: #dddddd;
+      }
+
+      #canvas {
+         left: 0px;
+         top: 0px;
+         margin: 20px;
+         background: #ffffff;
+         border: thin solid #aaaaaa;
+      }
+   </style>
+   </head>
+
+  <body>
+    <p>少了beginPath会出现反复绘制的情况,颜色有深浅。</p>
+    <canvas id='canvas' width='600' height='400'>
+      Canvas not supported
+    </canvas>
+
+    <script>
+        var canvas       = document.getElementById("canvas"),
+            context      = canvas.getContext('2d') ;
+
+        context.lineWidth = 20;
+        context.strokeStyle = 'rgba(241,158,194,0.5)'
+        context.beginPath();
+        context.rect(100,100,400,200)
+        context.stroke();
+
+        // context.beginPath();
+        context.rect(200,150,200,100);
+        context.stroke();
+        
+    </script>
+  </body>
+</html>
+
+
