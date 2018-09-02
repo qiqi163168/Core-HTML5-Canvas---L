@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>橡皮筋线条的绘制</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #controls {
+            position: absolute;
+            left: 25px;
+            top: 25px;
+        }
+        #canvas {
+            background: #ffffff;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-top: 10px;
+            -webkit-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+            -moz-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="400">
+        Canvas not supported
+    </canvas>
+
+    <div id='controls'>
+        Stroke color: 
+        <select id='strokeStyleSelect'>
+            <option value="red">red</option>
+            <option value="green">green</option>
+            <option value="blue">blue</option>
+            <option value="orange">orange</option>
+            <option value="cornflowerblue">cornflowerblue</option>
+            <option value="glodenrod">glodenrod</option>
+            <option value="navy">navy</option>
+            <option value="purple">purple</option>
+        </select>
+        Guidewires:
+        <input id="guidewiresCheckbox" type="checkbox" checked/>
+        <input id="eraseAllButton" type="button" value="Erase all">
+    </div>
+    
+    <script>
+        var canvas             = document.getElementById("canvas"),
+            context            = canvas.getContext('2d'),
+            eraseAllButton     = document.getElementById('eraseAllButton'),
+            strokeStyleSelect  = document.getElementById('strokeStyleSelect'),
+            guidewiresCheckbox = document.getElementById('guidewiresCheckbox'),
+            drawingSurfaceImageData,
+            mousedown = {},
+            rubberbandRect = {},
+            dragging = false,
+            guidewires = guidewiresCheckbox.checked;
+        
+        // Functions
+        function drawGrid(color, stepx, stepy) {
+            context.save();
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+            context.lineWidth = 0.5;
+            context.strokeStyle = color;
+
+            for (var i = stepx + 0.5; i < context.canvas.width; i += stepx) {
+                context.beginPath();
+                context.moveTo(i, 0);
+                context.lineTo(i, context.canvas.height);
+                context.stroke();
+            };
+
+            for (var i = stepy + 0.5; i < context.canvas.height; i += stepy) {
+                context.beginPath();
+                context.moveTo(0, i);
+                context.lineTo(context.canvas.width, i);
+                context.stroke();
+            };
+
+            context.restore();
+            };
+        
+        function windowToCanvas(x,y) {
+            var bbox = canvas.getBoundingClientRect();
+            return {    
+                x: x - bbox.left *  (canvas.width / bbox.width),
+                y: y - bbox.top  *  (canvas.height/ bbox.height) 
+            };
+        };
+
+        // Save and restore drawing surface...
+        funtion saveDrawingSurface(){
+            drawingSurfaceImageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        };
+        // Initialization
+        drawGrid('lightgray',10,10);
+    </script>
+
+</body>
+</html>
