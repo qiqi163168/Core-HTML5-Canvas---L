@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>线段连接点</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+    </style>
+</head>
+<body>
+    <p>三种不同的连接点：</p>
+    <canvas id="canvas" width="700" height="400">
+        Canvas not supported
+    </canvas>
+
+    <script>       
+        var canvas  = document.getElementById("canvas"),
+            context = canvas.getContext('2d');
+
+            context.font="20px Georgia";
+            context.fillText('round',100,220);
+            context.fillText('bevel',300,220);
+            context.fillText('miter(默认)',500,220);
+
+            context.beginPath();
+            context.lineWidth=40;
+            context.lineJoin="round";
+            context.moveTo(50,20);
+            context.lineTo(150,20);
+            context.lineTo(150,150);
+            context.stroke();
+
+            context.beginPath();
+            context.lineJoin="bevel";
+            context.moveTo(250,20);
+            context.lineTo(350,20);
+            context.lineTo(350,150);
+            context.stroke();
+
+            context.beginPath();
+            context.lineJoin="miter";
+            context.moveTo(450,20);
+            context.lineTo(550,20);
+            context.lineTo(550,150);
+            context.stroke();
+    </script>
+
+</body>
+</html>

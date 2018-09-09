@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>线帽</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+    </style>
+</head>
+<body>
+    <p>三种不同的线帽：</p>
+    <canvas id="canvas" width="600" height="400">
+        Canvas not supported
+    </canvas>
+
+    <script>       
+        var canvas  = document.getElementById("canvas"),
+            context = canvas.getContext('2d');
+
+            context.font="20px Georgia";
+            context.fillText('butt(默认)',300,20);
+            context.fillText('round',300,140);
+            context.fillText('square',300,260);
+
+            context.beginPath();
+            context.lineWidth=100;
+            context.lineCap="butt";
+            context.moveTo(50,20);
+            context.lineTo(200,20);
+            context.stroke();
+
+            context.beginPath();
+            context.lineCap="round";
+            context.moveTo(50,140);
+            context.lineTo(200,140);
+            context.stroke();
+
+            context.beginPath();
+            context.lineCap="square";
+            context.moveTo(50,260);
+            context.lineTo(200,260);
+            context.stroke();
+    </script>
+
+</body>
+</html>

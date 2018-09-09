@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>虚线的绘制</title>
+    <style>
+        body {
+            background: #ddd;
+        }
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border: thin inset #aaa;
+        }
+    </style>
+</head>
+<body>
+    <p>过扩展CanvasRenderingContext2D绘制虚线</p>
+    <canvas id="canvas" width="600" height="400">
+        Canvas not supported
+    </canvas>
+
+    <script>        
+        // CanvasRenderingContext2D对象...
+        var canvas  = document.getElementById("canvas"),
+            context = canvas.getContext('2d'),
+            moveToFunction = CanvasRenderingContext2D.prototype.moveTo;
+        CanvasRenderingContext2D.prototype.lastMoveToLocation = {};
+
+        CanvasRenderingContext2D.prototype.moveTo = function(x,y){
+            moveToFunction.apply(context,[x,y]);
+            this.lastMoveToLocation.x = x;
+            this.lastMoveToLocation.y = y;
+        };
+        
+        CanvasRenderingContext2D.prototype.dashedLineTo = function(x,y,dashLength){
+            dashLength = dashLength === undefined ? 5 : dashLength;
+            
+            var startX = this.lastMoveToLocation.x,
+                startY = this.lastMoveToLocation.y;
+            
+            var deltaX = x - startX,
+                deltaY = y - startY;
+                
+            var numDashes = Math.floor(
+                Math.sqrt(deltaX*deltaX + deltaY*deltaY) / dashLength
+            );
+
+            for(var i= 0; i<numDashes; ++i){
+                this[i%2 === 0 ? 'moveTo' : 'lineTo']
+                    (startX + (deltaX/numDashes)*i, startY + (deltaY/numDashes)*i);
+            };
+            this.moveTo(x,y);
+        };
+
+        context.lineWidth = 3;
+        context.strokeStyle = 'blue';
+
+        context.moveTo(20,20);
+        context.dashedLineTo(context.canvas.width-20, 20);
+        context.dashedLineTo(context.canvas.width-20, context.canvas.height-20);
+        context.dashedLineTo(20, context.canvas.height-20);
+        context.dashedLineTo(20,20);
+        context.dashedLineTo(context.canvas.width-20, context.canvas.height-20);
+        context.stroke();
+    </script>
+
+</body>
+</html>
